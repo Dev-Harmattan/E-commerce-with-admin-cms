@@ -14,7 +14,7 @@ const DashboardLayout = async ({
 
   if (!userId) redirect('/sign-in');
 
-  const store = await prismaDb.store.findUnique({
+  const store = await prismaDb.store.findMany({
     where: {
       id: params.storeId,
       userId,
