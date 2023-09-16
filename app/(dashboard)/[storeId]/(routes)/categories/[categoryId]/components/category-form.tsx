@@ -57,7 +57,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
   const title = initialData ? 'Edit category' : 'Create category';
   const description = initialData ? 'Edit a category' : 'Create a category';
   const toastMessage = initialData ? 'Category Updated' : 'Category Created';
-  const action = initialData ? 'Save changes' : 'Create category';
+  const action = initialData ? 'Save changes' : 'Create';
 
   const form = useForm<CategoryFormValues>({
     resolver: zodResolver(formSchema),
