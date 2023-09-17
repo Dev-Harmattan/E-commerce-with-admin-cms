@@ -20,6 +20,7 @@ model Store {
   caterories Category[] @relation("storeToCategory")
   sizes Size[] @relation("storeToSize")
   colors Color[] @relation("storeToColor")
+  products Product[] @relation("storeToProduct")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -46,6 +47,7 @@ model Category {
   store Store @relation("storeToCategory", fields: [storeId], references: [id])
   billboardId String
   billboard Billboard @relation(fields: [billboardId], references: [id])
+  products Product[] @relation("categoryToProduct")
 
   @@index([storeId])
   @@index([billboardId])
@@ -55,6 +57,7 @@ model Size {
   id String @id @default(uuid())
   storeId String 
   store Store @relation("storeToSize", fields: [storeId], references: [id])
+  products Product[]
   name String
   value String
   createdAt DateTime @default(now())
@@ -67,10 +70,46 @@ model Color {
   id String @id @default(uuid())
   storeId String 
   store Store @relation("storeToColor", fields: [storeId], references: [id])
+  products Product[]
   name String
   value String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([storeId])
+}
+
+model Product {
+  id String @id @default(uuid())
+  name String
+  price Decimal
+  isFeatured Boolean
+  isAchieved Boolean
+  images Image[]
+  storeId String
+  store Store @relation("storeToProduct", fields: [storeId], references: [id])
+  categoryId String
+  category Category @relation("categoryToProduct", fields: [categoryId], references: [id] )
+  sizeId String
+  size Size @relation(fields: [sizeId], references: [id])
+  colorId String
+  color Color @relation(fields: [colorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId])
+  @@index([categoryId])
+  @@index([sizeId])
+  @@index([colorId])
+}
+
+model Image {
+  id String @id @default(uuid())
+  url String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  productId String
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
 }
