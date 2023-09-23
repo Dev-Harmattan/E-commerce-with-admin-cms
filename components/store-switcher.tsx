@@ -25,6 +25,11 @@ import {
   CommandSeparator,
 } from 'cmdk';
 
+interface FormattedItem {
+  label: string;
+  value: string;
+}
+
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
   typeof PopoverTrigger
 >;
@@ -33,10 +38,7 @@ interface StoreSwitcherProps extends PopoverTriggerProps {
   items: Store[];
 }
 
-interface FormattedItem {
-  label: string;
-  value: string;
-}
+
 
 export const StoreSwitcher = ({ className, items }: StoreSwitcherProps) => {
   const [open, setOpen] = useState(false);
